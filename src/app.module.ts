@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProfessionalModule } from './professional/professional.module';
 import { ServiceModule } from './service/service.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,12 +9,16 @@ import { dataSourceOptions } from './db/data-source';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRoot({
+      ...dataSourceOptions,
+      // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      autoLoadEntities: true,
+    }),
     ProfessionalModule,
     ServiceModule,
     SchedulingModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
