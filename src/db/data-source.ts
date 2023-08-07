@@ -9,8 +9,8 @@ export const dataSourceOptions: DataSourceOptions = {
   // username: process.env.DB_USERNAME,
   // password: process.env.DB_PASSWORD,
   // database: process.env.DB_DATABASE,
-  entities: ['dist/**/*.entity.js'],
-  migrations: ['dist/db/migrations/*.js'],
+  entities: [__dirname + '/**/*.entity{.ts,.js}'], //['dist/**/*.entity.js'],
+  migrations: ['dist/db/migrations/*.js'], // [__dirname + '/db/migrations/*.{.ts,.js}'],
   url: process.env.DB_URL,
   ssl: { rejectUnauthorized: false },
 };
