@@ -22,6 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         // entities: [__dirname + '/**/*.entity{.ts,.js}'],
         // synchronize: true,
         url: configService.get('DB_URL'),
+        ssl: { rejectUnauthorized: false },
       }),
     }),
     ProfessionalModule,
