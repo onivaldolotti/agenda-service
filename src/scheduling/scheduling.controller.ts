@@ -19,9 +19,7 @@ export class SchedulingController {
       createAppointmentDto,
     );
     return {
-      data: {
-        result,
-      },
+      result,
     };
   }
 
@@ -40,9 +38,7 @@ export class SchedulingController {
       date,
     );
     return {
-      data: {
-        result: availableTimes,
-      },
+      result: availableTimes,
     };
   }
 
@@ -54,9 +50,7 @@ export class SchedulingController {
       +serviceId,
     );
     return {
-      data: {
-        result: availableDates,
-      },
+      result: availableDates,
     };
   }
 }
