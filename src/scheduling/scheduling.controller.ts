@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, HttpCode } from '@nestjs/common';
 import { SchedulingService } from './scheduling.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AvailableTimesDto } from './dto/available-times.dto';
@@ -10,6 +10,7 @@ import { AvailabilityDto } from './dto/availability.dto';
 export class SchedulingController {
   constructor(private schedulingService: SchedulingService) {}
 
+  @HttpCode(201)
   @Post('create-appointment')
   async createAppointment(
     @Body() createAppointmentDto: CreateAppointmentDto,
@@ -17,7 +18,11 @@ export class SchedulingController {
     const result = await this.schedulingService.createAppointment(
       createAppointmentDto,
     );
-    return result;
+    return {
+      data: {
+        result,
+      },
+    };
   }
 
   @Get('available-times')
@@ -27,16 +32,18 @@ export class SchedulingController {
     description: 'Available times retrieved successfully',
   })
   @ApiResponse({ status: 400, description: 'Bad Request' })
-  async getAvailableTimes(
-    @Query() query: AvailableTimesDto,
-  ): Promise<string[]> {
+  async getAvailableTimes(@Query() query: AvailableTimesDto) {
     const { professionalId, serviceId, date } = query;
     const availableTimes = await this.schedulingService.getAvailableTimes(
       +professionalId,
       +serviceId,
       date,
     );
-    return availableTimes;
+    return {
+      data: {
+        result: availableTimes,
+      },
+    };
   }
 
   @Get('available-dates')
@@ -46,6 +53,10 @@ export class SchedulingController {
       +professionalId,
       +serviceId,
     );
-    return availableDates;
+    return {
+      data: {
+        result: availableDates,
+      },
+    };
   }
 }
